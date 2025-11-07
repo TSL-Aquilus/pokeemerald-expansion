@@ -5803,7 +5803,9 @@ bool32 CanBeConfused(u32 battler)
 {
     if (gBattleMons[battler].volatiles.confusionTurns > 0
      || IsBattlerTerrainAffected(battler, STATUS_FIELD_MISTY_TERRAIN)
-     || IsAbilityAndRecord(battler, GetBattlerAbility(battler),ABILITY_OWN_TEMPO))
+     || IsAbilityAndRecord(battler, GetBattlerAbility(battler),ABILITY_OWN_TEMPO)
+     // Add Bug immunity to confusion
+     || IS_BATTLER_OF_TYPE(battler, TYPE_BUG))
         return FALSE;
     return TRUE;
 }
