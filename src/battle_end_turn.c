@@ -276,6 +276,29 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
             }
         }
         break;
+    case BATTLE_WEATHER_MIASMA:
+        if (//ability != ABILITY_SAND_VEIL - add immuntiy abilities if/when added
+         //&& ability != ABILITY_SAND_FORCE
+         //&& ability != ABILITY_SAND_RUSH
+         ability != ABILITY_OVERCOAT
+         && !IS_BATTLER_ANY_TYPE(battler, TYPE_POISON, TYPE_STEEL)
+         && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
+         && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
+         && GetBattlerHoldEffect(battler, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES
+         && !IsAbilityAndRecord(battler, ability, ABILITY_MAGIC_GUARD))
+        {
+            // check if poisoned
+            if (gBattleMons[battler].status1 & STATUS1_PSN_ANY)
+                gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 8;
+            else
+                gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 16;
+            if (gBattleStruct->moveDamage[battler] == 0)
+                gBattleStruct->moveDamage[battler] = 1;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_MIASMA;
+            BattleScriptExecute(BattleScript_DamagingWeather);
+            effect = TRUE;
+        }
+        break;
     }
 
     return effect;

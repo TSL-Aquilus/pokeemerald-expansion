@@ -9010,6 +9010,11 @@ static uq4_12_t GetWeatherDamageModifier(struct DamageContext *ctx)
 {
     if (ctx->weather == B_WEATHER_NONE)
         return UQ_4_12(1.0);
+
+    // Miasma damage mod - not affected by utility umbrella
+    if (ctx->moveType = TYPE_FAIRY && (ctx->weather & B_WEATHER_MIASMA))
+        return UQ_4_12(0.5);
+
     if (GetMoveEffect(ctx->move) == EFFECT_HYDRO_STEAM && (ctx->weather & B_WEATHER_SUN) && ctx->holdEffectAtk != HOLD_EFFECT_UTILITY_UMBRELLA)
         return UQ_4_12(1.5);
     if (ctx->holdEffectDef == HOLD_EFFECT_UTILITY_UMBRELLA)
