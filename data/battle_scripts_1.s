@@ -3978,6 +3978,14 @@ BattleScript_EffectSandstorm::
 	setfieldweather BATTLE_WEATHER_SANDSTORM
 	goto BattleScript_MoveWeatherChange
 
+BattleScript_EffectMiasma::
+	attackcanceler
+	attackstring
+	ppreduce
+	call BattleScript_CheckPrimalWeather
+	setfieldweather BATTLE_WEATHER_MIASMA
+	goto BattleScript_MoveWeatherChange
+
 BattleScript_EffectRollout::
 	attackcanceler
 	attackstring
