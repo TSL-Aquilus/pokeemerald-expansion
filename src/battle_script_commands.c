@@ -3801,6 +3801,7 @@ void SetMoveEffect(u32 battler, u32 effectBattler, bool32 primary, bool32 certai
     case MOVE_EFFECT_RAIN:
     case MOVE_EFFECT_SANDSTORM:
     case MOVE_EFFECT_HAIL:
+    case MOVE_EFFECT_MIASMA:
     {
         u8 weather = 0, msg = 0;
         switch (gBattleScripting.moveEffect)
@@ -3816,6 +3817,10 @@ void SetMoveEffect(u32 battler, u32 effectBattler, bool32 primary, bool32 certai
             case MOVE_EFFECT_SANDSTORM:
                 weather = BATTLE_WEATHER_SANDSTORM;
                 msg = B_MSG_STARTED_SANDSTORM;
+                break;
+            case MOVE_EFFECT_MIASMA:
+                weather = BATTLE_WEATHER_MIASMA;
+                msg = B_MSG_STARTED_MIASMA;
                 break;
             case MOVE_EFFECT_HAIL:
                 if (B_PREFERRED_ICE_WEATHER == B_ICE_WEATHER_SNOW)
@@ -5477,7 +5482,8 @@ static void PlayAnimation(u32 battler, u8 animId, const u16 *argPtr, const u8 *n
           || animId == B_ANIM_SANDSTORM_CONTINUES
           || animId == B_ANIM_HAIL_CONTINUES
           || animId == B_ANIM_SNOW_CONTINUES
-          || animId == B_ANIM_FOG_CONTINUES)
+          || animId == B_ANIM_FOG_CONTINUES
+          || animId == B_ANIM_MIASMA_CONTINUES)
     {
         BtlController_EmitBattleAnimation(battler, B_COMM_TO_CONTROLLER, animId, &gDisableStructs[battler], *argPtr);
         MarkBattlerForControllerExec(battler);
@@ -9163,6 +9169,8 @@ static void RemoveAllWeather(void)
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_END_SNOW;
     else if (gBattleWeather & B_WEATHER_FOG)
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_END_FOG;
+    else if (gBattleWeather & B_WEATHER_MIASMA)
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_END_MIASMA;
     else
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_END_COUNT;  // failsafe
 
@@ -9780,6 +9788,9 @@ static void Cmd_setfieldweather(void)
         break;
     case BATTLE_WEATHER_SNOW:
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_SNOW;
+        break;
+    case BATTLE_WEATHER_MIASMA:
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_MIASMA;
         break;
     }
 

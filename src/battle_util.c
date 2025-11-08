@@ -176,6 +176,15 @@ static const struct BattleWeatherInfo sBattleWeatherInfo[BATTLE_WEATHER_COUNT] =
         .animation = B_ANIM_HAIL_CONTINUES,
     },
 
+    [BATTLE_WEATHER_MIASMA] =
+    {
+        .flag = B_WEATHER_MIASMA,
+        .rock = HOLD_EFFECT_NONE, // can consider adding a rock for Miasma down the line
+        .endMessage = B_MSG_WEATHER_END_MIASMA,
+        .continuesMessage = B_MSG_WEATHER_TURN_MIASMA,
+        .animation = B_ANIM_MIASMA_CONTINUES,
+    },
+
     [BATTLE_WEATHER_SNOW] =
     {
         .flag = B_WEATHER_SNOW,
@@ -3493,6 +3502,14 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 {
                     gBattleWeather = B_WEATHER_SANDSTORM;
                     gBattleScripting.animArg1 = B_ANIM_SANDSTORM_CONTINUES;
+                    effect++;
+                }
+                break;
+            case WEATHER_MIASMA:
+                if (!(gBattleWeather & B_WEATHER_MIASMA))
+                {
+                    gBattleWeather = B_WEATHER_MIASMA;
+                    gBattleScripting.animArg1 = B_ANIM_MIASMA_CONTINUES;
                     effect++;
                 }
                 break;
@@ -8226,7 +8243,7 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct DamageContext *ctx)
             modifier = uq4_12_multiply(modifier, UQ_4_12(2.0));
         break;
     case EFFECT_SOLAR_BEAM:
-        if (IsBattlerWeatherAffected(battlerAtk, (B_WEATHER_HAIL | B_WEATHER_SANDSTORM | B_WEATHER_RAIN | B_WEATHER_SNOW | B_WEATHER_FOG)))
+        if (IsBattlerWeatherAffected(battlerAtk, (B_WEATHER_HAIL | B_WEATHER_SANDSTORM | B_WEATHER_RAIN | B_WEATHER_SNOW | B_WEATHER_FOG | B_WEATHER_MIASMA)))
             modifier = uq4_12_multiply(modifier, UQ_4_12(0.5));
         break;
     case EFFECT_STOMPING_TANTRUM:

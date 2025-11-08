@@ -4031,6 +4031,7 @@ static u32 GetAIEffectGroupFromMove(u32 battler, u32 move)
         case MOVE_EFFECT_RAIN:
         case MOVE_EFFECT_SANDSTORM:
         case MOVE_EFFECT_HAIL:
+        case MOVE_EFFECT_MIASMA:
             aiEffect |= AI_EFFECT_WEATHER;
             break;
         case MOVE_EFFECT_ELECTRIC_TERRAIN:

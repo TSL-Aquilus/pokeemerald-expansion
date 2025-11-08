@@ -27076,6 +27076,41 @@ gBattleAnimMove_Sandstorm::
 	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 0
 	end
 
+@ Also used by Miasma weather
+@ Note this was my first attempt at an animation script so really note sure how it'll turn out in-game - made need further revisions
+gBattleAnimMove_Miasma::
+	loadspritegfx ANIM_TAG_FLYING_DIRT
+	playsewithpan SE_M_TOXIC, 0
+	fadetobg BG_GHOST
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -1535, 0, 0, -1
+	delay 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, (F_PAL_BG | F_PAL_BATTLERS_2), 2, 0, 4, RGB_BLACK
+	waitbgfadein
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	delay 0
+	restorebg
+	waitbgfadeout
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, (F_PAL_BG | F_PAL_BATTLERS_2), 2, 4, 0, RGB_BLACK
+	waitbgfadein
+	end
+
 gBattleAnimMove_Whirlpool::
 	loadspritegfx ANIM_TAG_WATER_ORB
 	monbg ANIM_DEF_PARTNER
@@ -30611,6 +30646,7 @@ gBattleAnimMove_WeatherBall::
 	jumpreteq ANIM_WEATHER_HAIL, WeatherBallIce
 	jumpreteq ANIM_WEATHER_SNOW, WeatherBallIce
 	jumpreteq ANIM_WEATHER_FOG, WeatherBallNormal
+	jumpreteq ANIM_WEATHER_MIASMA, WeatherBallPoison
 WeatherBallNormal:
 	loadspritegfx ANIM_TAG_IMPACT
 	createsprite gWeatherBallNormalDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
@@ -30684,6 +30720,23 @@ WeatherBallIce:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	call IceCrystalEffectShort
+	waitforvisualfinish
+	end
+WeatherBallPoison:
+	loadspritegfx ANIM_TAG_POISON_POWDER
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	createsprite gPoisonPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, -40, 20
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gPoisonPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 40, 0
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gPoisonPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 0, 0
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 
@@ -31347,6 +31400,10 @@ gBattleAnimGeneral_Sun::
 
 gBattleAnimGeneral_Sandstorm::
 	goto gBattleAnimMove_Sandstorm
+
+@ New poison weather
+gBattleAnimGeneral_Miasma::
+	goto gBattleAnimMove_Miasma
 
 gBattleAnimGeneral_Hail::
 	goto gBattleAnimMove_Hail
@@ -37835,6 +37892,7 @@ gBattleAnimGeneral_SetWeather::
 	jumpreteq 2, gBattleAnimGeneral_Rain
 	jumpreteq 3, gBattleAnimGeneral_Sandstorm
 	jumpreteq 4, gBattleAnimGeneral_Hail
+	jumpreteq 5, gBattleAnimGeneral_Miasma
 	end
 
 gBattleAnimMove_MaxGuard::
