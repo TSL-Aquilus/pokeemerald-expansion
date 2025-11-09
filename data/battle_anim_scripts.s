@@ -30673,7 +30673,7 @@ gBattleAnimMove_WeatherBall::
 	jumpreteq ANIM_WEATHER_SNOW, WeatherBallIce
 	jumpreteq ANIM_WEATHER_FOG, WeatherBallNormal
 	jumpreteq ANIM_WEATHER_MIASMA, WeatherBallPoison
-	humpreteq ANIM_WEATHER_POLLEN, WeatherBallGrass
+	jumpreteq ANIM_WEATHER_POLLEN, WeatherBallGrass
 WeatherBallNormal:
 	loadspritegfx ANIM_TAG_IMPACT
 	createsprite gWeatherBallNormalDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
