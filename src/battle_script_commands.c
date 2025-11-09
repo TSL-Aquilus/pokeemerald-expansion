@@ -3575,6 +3575,44 @@ void SetMoveEffect(u32 battler, u32 effectBattler, bool32 primary, bool32 certai
             gBattleScripting.moveEffect = gBattleEnvironmentInfo[gBattleEnvironment].secretPowerEffect;
         SetMoveEffect(battler, effectBattler, primary, certain);
         break;
+    case MOVE_EFFECT_WEATHER_BALL:
+        if (HasWeatherEffect() && gBattleWeather & B_WEATHER_ANY)
+        {
+            if (gBattleWeather & B_WEATHER_RAIN && !(GetBattlerHoldEffect(gBattlerAttacker, TRUE) == HOLD_EFFECT_UTILITY_UMBRELLA))
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_SPD_MINUS_1;
+                break;
+            }
+            else if (gBattleWeather & B_WEATHER_SANDSTORM)
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_FLINCH;
+                break;
+            }
+            else if (gBattleWeather & B_WEATHER_SUN && !(GetBattlerHoldEffect(gBattlerAttacker, TRUE) == HOLD_EFFECT_UTILITY_UMBRELLA))
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_BURN;
+                break;
+            }
+            else if (gBattleWeather & (B_WEATHER_SNOW | B_WEATHER_HAIL))
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_FROSTBITE;
+                break;
+            }
+            else if (gBattleWeather & B_WEATHER_MIASMA)
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_POISON;
+                break;
+            }
+            else if (gBattleWeather & B_WEATHER_POLLEN)
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_CONFUSION;
+                break;
+            }
+        }
+        else
+            gBattleScripting.moveEffect = MOVE_EFFECT_NONE;
+        SetMoveEffect(battler, effectBattler, primary, certain);
+        break;
     case MOVE_EFFECT_PSYCHIC_NOISE:
         battlerAbility = IsAbilityOnSide(gEffectBattler, ABILITY_AROMA_VEIL);
 
