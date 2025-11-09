@@ -27111,6 +27111,32 @@ gBattleAnimMove_Miasma::
 	waitbgfadein
 	end
 
+@ Also used by Dense Pollen weather
+gBattleAnimMove_Pollen::
+	loadspritegfx ANIM_TAG_SPORE
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, (F_PAL_BG | F_PAL_BATTLERS_2), 2, 0, 4, RGB(13, 31, 12)
+	waitforvisualfinish
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 10, 2304, 96, 0
+	delay 12
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 90, 2048, 96, 0
+	delay 12
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 50, 2560, 96, 0
+	delay 12
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 20, 2304, 96, 0
+	delay 12
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 70, 1984, 96, 0
+	delay 12
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 0
+	delay 12
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER
+	delay 30
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, (F_PAL_BG | F_PAL_BATTLERS_2), 2, 4, 0, RGB(13, 31, 12)
+	waitforvisualfinish
+	end
+
+
 gBattleAnimMove_Whirlpool::
 	loadspritegfx ANIM_TAG_WATER_ORB
 	monbg ANIM_DEF_PARTNER
@@ -30647,6 +30673,7 @@ gBattleAnimMove_WeatherBall::
 	jumpreteq ANIM_WEATHER_SNOW, WeatherBallIce
 	jumpreteq ANIM_WEATHER_FOG, WeatherBallNormal
 	jumpreteq ANIM_WEATHER_MIASMA, WeatherBallPoison
+	humpreteq ANIM_WEATHER_POLLEN, WeatherBallGrass
 WeatherBallNormal:
 	loadspritegfx ANIM_TAG_IMPACT
 	createsprite gWeatherBallNormalDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
@@ -30737,6 +30764,25 @@ WeatherBallPoison:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	call PoisonBubblesEffect
+	waitforvisualfinish
+	end
+WeatherBallGrass:
+	loadspritegfx ANIM_TAG_SPORE
+	loadspritegfx ANIM_TAG_SLEEP_POWDER
+	createsprite gSleepPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, -40, 20
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gSleepPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 40, 0
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gSleepPowderParticleSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 0, 0
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_TARGET
+	call CreateSpore
+	call CreateSpore
+	call CreateSpore
 	waitforvisualfinish
 	end
 
@@ -31404,6 +31450,10 @@ gBattleAnimGeneral_Sandstorm::
 @ New poison weather
 gBattleAnimGeneral_Miasma::
 	goto gBattleAnimMove_Miasma
+
+@ New bug weather
+gBattleAnimGeneral_Pollen::
+	goto gBattleAnimMove_Pollen
 
 gBattleAnimGeneral_Hail::
 	goto gBattleAnimMove_Hail
@@ -37893,6 +37943,7 @@ gBattleAnimGeneral_SetWeather::
 	jumpreteq 3, gBattleAnimGeneral_Sandstorm
 	jumpreteq 4, gBattleAnimGeneral_Hail
 	jumpreteq 5, gBattleAnimGeneral_Miasma
+	jumpreteq 6, gBattleAnimGeneral_Pollen
 	end
 
 gBattleAnimMove_MaxGuard::

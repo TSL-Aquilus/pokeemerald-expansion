@@ -592,8 +592,9 @@
 #define B_ANIM_SIMPLE_HEAL              52
 #define B_ANIM_POWER_CONSTRUCT          53
 #define B_ANIM_MIASMA_CONTINUES         54 // add poison weather
+#define B_ANIM_POLLEN_CONTINUES         55 // add bug weather
 
-#define NUM_B_ANIMS_GENERAL             55 // incremented to make space for new weather - may cause issues?
+#define NUM_B_ANIMS_GENERAL             56 // incremented to make space for new weather
 
 // special animations table (sBattleAnims_Special)
 #define B_ANIM_LVL_UP                   0
@@ -647,6 +648,7 @@
 #define ANIM_WEATHER_SNOW 5
 #define ANIM_WEATHER_FOG 6
 #define ANIM_WEATHER_MIASMA 7
+#define ANIM_WEATHER_POLLEN 8
 
 // horseshoe/fist frames
 #define ANIM_RIGHT_FIST  0

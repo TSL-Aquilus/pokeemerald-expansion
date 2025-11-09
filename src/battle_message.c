@@ -405,6 +405,9 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_MIASMASETTLED]                        = COMPOUND_STRING("A foul air settled!"),
     [STRINGID_MIASMACHOKES]                         = COMPOUND_STRING("Poison chokes the air."),
     [STRINGID_MIASMASUBSIDED]                       = COMPOUND_STRING("The foul air subsided."),
+    [STRINGID_POLLENSTARTED]                        = COMPOUND_STRING("A dense pollen filled the air!"),
+    [STRINGID_POLLENDENSE]                          = COMPOUND_STRING("The air is thick with pollen."),
+    [STRINGID_POLLENSUBSIDED]                       = COMPOUND_STRING("The dense pollen subsided."),
     [STRINGID_SUNLIGHTGOTBRIGHT]                    = COMPOUND_STRING("The sunlight turned harsh!"),
     [STRINGID_SUNLIGHTSTRONG]                       = COMPOUND_STRING("The sunlight is strong."), //not in gen 5+
     [STRINGID_SUNLIGHTFADED]                        = COMPOUND_STRING("The sunlight faded."),
@@ -440,6 +443,7 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_ITISRAINING]                          = COMPOUND_STRING("It's raining!"),
     [STRINGID_SANDSTORMISRAGING]                    = COMPOUND_STRING("The sandstorm is raging!"),
     [STRINGID_MIASMAISCHOKING]                      = COMPOUND_STRING("Poison is choking the air!"),
+    [STRINGID_POLLENISDENSE]                        = COMPOUND_STRING("The air is thick with pollen!"),
     [STRINGID_CANTESCAPE2]                          = COMPOUND_STRING("You couldn't get away!\p"),
     [STRINGID_PKMNIGNORESASLEEP]                    = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} ignored orders and kept sleeping!"),
     [STRINGID_PKMNIGNOREDORDERS]                    = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} ignored orders!"),
@@ -1031,6 +1035,7 @@ const u16 gMoveWeatherChangeStringIds[] =
     [B_MSG_STARTED_SNOW]      = STRINGID_STARTEDSNOW,
     [B_MSG_STARTED_FOG]       = STRINGID_FOGCREPTUP, // Unused, can use for custom moves that set fog
     [B_MSG_STARTED_MIASMA]    = STRINGID_MIASMASETTLED,
+    [B_MSG_STARTED_POLLEN]    = STRINGID_POLLENSTARTED,
 };
 
 const u16 gWeatherEndsStringIds[B_MSG_WEATHER_END_COUNT] =
@@ -1043,6 +1048,7 @@ const u16 gWeatherEndsStringIds[B_MSG_WEATHER_END_COUNT] =
     [B_MSG_WEATHER_END_FOG]          = STRINGID_FOGLIFTED,
     [B_MSG_WEATHER_END_STRONG_WINDS] = STRINGID_STRONGWINDSDISSIPATED,
     [B_MSG_WEATHER_END_MIASMA]       = STRINGID_MIASMASUBSIDED,
+    [B_MSG_WEATHER_END_POLLEN]       = STRINGID_POLLENSUBSIDED,
 };
 
 const u16 gWeatherTurnStringIds[] =
@@ -1056,6 +1062,7 @@ const u16 gWeatherTurnStringIds[] =
     [B_MSG_WEATHER_TURN_FOG]          = STRINGID_FOGISDEEP,
     [B_MSG_WEATHER_TURN_STRONG_WINDS] = STRINGID_MYSTERIOUSAIRCURRENTBLOWSON,
     [B_MSG_WEATHER_TURN_MIASMA]       = STRINGID_MIASMACHOKES,
+    [B_MSG_WEATHER_TURN_POLLEN]       = STRINGID_POLLENDENSE,
 };
 
 const u16 gSandStormHailDmgStringIds[] =
@@ -1300,6 +1307,7 @@ const u16 gWeatherStartsStringIds[] =
     [WEATHER_UNDERWATER_BUBBLES] = STRINGID_ITISRAINING,
     [WEATHER_ABNORMAL]           = STRINGID_ITISRAINING,
     [WEATHER_MIASMA]             = STRINGID_MIASMAISCHOKING,
+    [WEATHER_POLLEN]             = STRINGID_POLLENISDENSE,
 };
 
 const u16 gTerrainStartsStringIds[] =

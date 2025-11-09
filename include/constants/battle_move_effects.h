@@ -97,6 +97,8 @@ enum __attribute__((packed)) BattleMoveEffects
     EFFECT_FORESIGHT,
     EFFECT_PERISH_SONG,
     EFFECT_SANDSTORM,
+    EFFECT_MIASMA,
+    EFFECT_POLLEN,
     EFFECT_ENDURE,
     EFFECT_ROLLOUT,
     EFFECT_SWAGGER,

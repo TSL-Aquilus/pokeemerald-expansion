@@ -3986,6 +3986,14 @@ BattleScript_EffectMiasma::
 	setfieldweather BATTLE_WEATHER_MIASMA
 	goto BattleScript_MoveWeatherChange
 
+BattleScript_EffectPollen::
+	attackcanceler
+	attackstring
+	ppreduce
+	call BattleScript_CheckPrimalWeather
+	setfieldweather BATTLE_WEATHER_POLLEN
+	goto BattleScript_MoveWeatherChange
+
 BattleScript_EffectRollout::
 	attackcanceler
 	attackstring

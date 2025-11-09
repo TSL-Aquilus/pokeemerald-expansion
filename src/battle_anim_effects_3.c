@@ -5802,6 +5802,8 @@ void AnimTask_GetWeather(u8 taskId)
         gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_FOG;
     else if (gWeatherMoveAnim & B_WEATHER_MIASMA)
         gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_MIASMA;
+    else if (gWeatherMoveAnim & B_WEATHER_POLLEN)
+        gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_POLLEN;
 
     DestroyAnimVisualTask(taskId);
 }

@@ -4752,6 +4752,15 @@ u32 GetBattlerTotalSpeedStatArgs(u32 battler, u32 ability, enum ItemHoldEffect h
             speed *= 2;
         else if (ability == ABILITY_SLUSH_RUSH  && (gBattleWeather & (B_WEATHER_HAIL | B_WEATHER_SNOW)))
             speed *= 2;
+
+        // not strictly an ability but handling here alongside other weather speed control
+        else if (!IS_BATTLER_OF_TYPE(battler, TYPE_BUG) 
+                    && !IS_BATTLER_OF_TYPE(battler, TYPE_GRASS)
+                    && ability != ABILITY_OVERCOAT
+                    && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES
+                    && gBattleWeather & B_WEATHER_POLLEN)
+            speed *= 0.5;
+            
     }
 
     // other abilities
@@ -5896,6 +5905,8 @@ u32 GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, enum MonState
                     return TYPE_ICE;
                 else if (gBattleWeather & B_WEATHER_MIASMA)
                     return TYPE_POISON;
+                else if (gBattleWeather & B_WEATHER_POLLEN)
+                    return TYPE_GRASS;
                 else
                     return moveType;
             }
@@ -5918,6 +5929,10 @@ u32 GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, enum MonState
                 return TYPE_ICE;
             case WEATHER_SANDSTORM:
                 return TYPE_ROCK;
+            case WEATHER_MIASMA:
+                return TYPE_POISON;
+            case WEATHER_POLLEN:
+                return TYPE_GRASS;
             }
             return moveType;
         }

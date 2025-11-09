@@ -185,6 +185,15 @@ static const struct BattleWeatherInfo sBattleWeatherInfo[BATTLE_WEATHER_COUNT] =
         .animation = B_ANIM_MIASMA_CONTINUES,
     },
 
+    [BATTLE_WEATHER_POLLEN] =
+    {
+        .flag = B_WEATHER_POLLEN,
+        .rock = HOLD_EFFECT_NONE, // can consider adding a rock for Pollen down the line
+        .endMessage = B_MSG_WEATHER_END_POLLEN,
+        .continuesMessage = B_MSG_WEATHER_TURN_POLLEN,
+        .animation = B_ANIM_POLLEN_CONTINUES,
+    },
+
     [BATTLE_WEATHER_SNOW] =
     {
         .flag = B_WEATHER_SNOW,
@@ -3510,6 +3519,14 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 {
                     gBattleWeather = B_WEATHER_MIASMA;
                     gBattleScripting.animArg1 = B_ANIM_MIASMA_CONTINUES;
+                    effect++;
+                }
+                break;
+            case WEATHER_POLLEN:
+                if (!(gBattleWeather & B_WEATHER_POLLEN))
+                {
+                    gBattleWeather = B_WEATHER_POLLEN;
+                    gBattleScripting.animArg1 = B_ANIM_POLLEN_CONTINUES;
                     effect++;
                 }
                 break;
@@ -8243,7 +8260,7 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct DamageContext *ctx)
             modifier = uq4_12_multiply(modifier, UQ_4_12(2.0));
         break;
     case EFFECT_SOLAR_BEAM:
-        if (IsBattlerWeatherAffected(battlerAtk, (B_WEATHER_HAIL | B_WEATHER_SANDSTORM | B_WEATHER_RAIN | B_WEATHER_SNOW | B_WEATHER_FOG | B_WEATHER_MIASMA)))
+        if (IsBattlerWeatherAffected(battlerAtk, (B_WEATHER_HAIL | B_WEATHER_SANDSTORM | B_WEATHER_RAIN | B_WEATHER_SNOW | B_WEATHER_FOG | B_WEATHER_MIASMA | B_WEATHER_POLLEN)))
             modifier = uq4_12_multiply(modifier, UQ_4_12(0.5));
         break;
     case EFFECT_STOMPING_TANTRUM:
@@ -9015,6 +9032,12 @@ static uq4_12_t GetWeatherDamageModifier(struct DamageContext *ctx)
     if (ctx->weather & B_WEATHER_MIASMA)
     {
         return (ctx->moveType == TYPE_FAIRY) ? UQ_4_12(0.5) : UQ_4_12(1.0);
+    }
+
+    // Pollen damage mod - not affected by utility umbrella
+    if (ctx->weather & B_WEATHER_POLLEN)
+    {
+        return (ctx->moveType == TYPE_BUG) ? UQ_4_12(1.5) : UQ_4_12(1.0);
     }
 
     if (GetMoveEffect(ctx->move) == EFFECT_HYDRO_STEAM && (ctx->weather & B_WEATHER_SUN) && ctx->holdEffectAtk != HOLD_EFFECT_UTILITY_UMBRELLA)
